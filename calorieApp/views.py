@@ -5,7 +5,7 @@ def index(request):
     if request.method == 'POST':
         query = request.POST.get('query')
         api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
-        response = requests.get(api_url + query, headers={'X-Api-Key': 'mwmSgJkC/rHgVjWe1QpQPw==lC81SizR8lLMQRCp'})
+        response = requests.get(api_url + query, headers={'X-Api-Key': 'Your API KEY'})
         if response.status_code == requests.codes.ok:
             data = response.json()
             print(data)
