@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        li:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calorie Calculator</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="query">Enter Food or Drink Items:</label><br>
+            <input type="text" id="query" name="query" required placeholder="E.g., 3lb carrots and a chicken sandwich"><br><br>
+            <input type="submit" value="Calculate">
+        </form>
+        {% if items %}
+            <h2>Results:</h2>
+            <ul>
+                {% for item in items %}
+                    <li>
+                        <strong>{{ item.name |upper }}</strong><br>
+                        Calories: {{ item.calories }}<br>
+                        Serving Size: {{ item.serving_size_g }}g<br>
+                        Total Fat: {{ item.fat_total_g }}g<br>
+                        Saturated Fat: {{ item.fat_saturated_g }}g<br>
+                        Protein: {{ item.protein_g }}g<br>
+                        Sodium: {{ item.sodium_mg }}mg<br>
+                        Potassium: {{ item.potassium_mg }}mg<br>
+                        Cholesterol: {{ item.cholesterol_mg }}mg<br>
+                        Total Carbohydrates: {{ item.carbohydrates_total_g }}g<br>
+                        Fiber: {{ item.fiber_g }}g<br>
+                        Sugar: {{ item.sugar_g }}g<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if error_message %}
+            <p>{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
